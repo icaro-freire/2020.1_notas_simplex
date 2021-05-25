@@ -5,3 +5,7 @@ Repositório destinado à apresentação das notas da disciplina _Funções de u
 
 [CFP]: https://www.ufrb.edu.br/cfp/
 [UFRB]: https://www.ufrb.edu.br/portal/
+
+Para ver o resultado final, acesse:
+
+[:link: https://icaro-freire.github.io/2020.1_notas_simplex/](https://icaro-freire.github.io/2020.1_notas_simplex/)
