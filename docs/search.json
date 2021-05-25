@@ -2,19 +2,19 @@
   "articles": [
     {
       "path": "about.html",
-      "title": "About this site",
-      "description": "Some additional details about the website",
+      "title": "Sobre este site",
+      "description": "Pequena descrição",
       "author": [],
-      "contents": "\r\n\r\n\r\n\r\n",
-      "last_modified": "2021-05-25T15:43:47-03:00"
+      "contents": "\r\nEste site é destinado à apresentação das notas da disciplina Funções de uma Variável Complexa do semestre remoto de 2020.1, do Centro de Formação de Professores da Universidade Federal do Recôncavo da Bahia.\r\nPara ver o repositório desse site, acesse:\r\n🔗 https://github.com/icaro-freire/2020.1_notas_simplex\r\n\r\n\r\n\r\n",
+      "last_modified": "2021-05-25T18:36:12-03:00"
     },
     {
       "path": "index.html",
-      "title": "Simplex 2020.1",
-      "description": "Welcome to the website. I hope you enjoy it!\n",
+      "title": "Funções de uma Variável Complexa",
+      "description": "Pequeno relatório das notas `r emo::ji(\"wink\")`\n",
       "author": [],
-      "contents": "\r\n\r\n\r\n\r\n",
-      "last_modified": "2021-05-25T15:44:56-03:00"
+      "contents": "\r\n\r\nContents\r\nSobre a Média\r\nNotas\r\nGráficos\r\n\r\nSobre a Média\r\nPessoal, fizemos Lições (\\(N_{_\\mathrm{L}}\\)), Atividades Avaliativas (cuja média denotaremos por \\(N_{_\\mathrm{AV}}\\)), Provas (cuja média denotaremos por \\(N_{_\\mathrm{P}}\\)) e Pontos Extras (se houver mais de um, será a média entre eles, denotada por \\(P_{_\\mathrm{Ext}}\\)).\r\nA média final da disciplina (\\(M_{_\\mathcal{D}}\\)) é calculada com a seguinte fórmula: \\[\r\n  M_{_\\mathcal{D}} = \\frac{3 \\cdot N_{_\\mathrm{L}} + 3 \\cdot  N_{_\\mathrm{AV}}  + 4\\cdot N_{_\\mathrm{P}} }{100} + P_{_\\mathrm{Ext}}\r\n\\]\r\nObviamente, a nota máxima alcançada não pode ultrapassar os 10 pontos.\r\nNotas\r\nA tabela abaixo mostra o resumo até agora. Qualquer discrepância deve ser comunicada imediatamente, visto que tais notas serão postas no SIGAA em breve (no Sábado, provamelmente).\r\n Caso necessário, movimente a barra de rolagem horizontal até que você veja a nota. Além disso, você pode digitar sua matrícula para individualizar sua análise.\r\n\r\n\r\n{\"x\":{\"filter\":\"none\",\"caption\":\"<caption>Resultado Parcial<\\/caption>\",\"data\":[[\"1\",\"2\",\"3\",\"4\",\"5\",\"6\",\"7\",\"8\",\"9\"],[\"20101415\",\"201611179\",\"201111593\",\"201210054\",\"201411224\",\"2017204574\",\"2017204500\",\"20101448\",\"201611170\"],[42,52,44,null,24,100,100,40,31]],\"container\":\"<table class=\\\"display\\\">\\n  <thead>\\n    <tr>\\n      <th> <\\/th>\\n      <th>matricula<\\/th>\\n      <th>prova_01<\\/th>\\n    <\\/tr>\\n  <\\/thead>\\n<\\/table>\",\"options\":{\"scrollX\":true,\"columnDefs\":[{\"className\":\"dt-right\",\"targets\":2},{\"orderable\":false,\"targets\":0}],\"order\":[],\"autoWidth\":false,\"orderClasses\":false}},\"evals\":[],\"jsHooks\":[]}\r\nGráficos\r\nEm breve!\r\n\r\n\r\n\r\n",
+      "last_modified": "2021-05-25T18:36:19-03:00"
     }
   ],
   "collections": []
