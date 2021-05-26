@@ -11,6 +11,7 @@ editor_options:
 knitr::opts_chunk$set(echo = FALSE)
 library(tidyverse)
 library(DT)
+library(plotly)
 ```
 
 ## Sobre a Média
@@ -35,16 +36,16 @@ Qualquer discrepância deve ser comunicada imediatamente, visto que tais notas s
 
 ```{r}
 nota_parcial <- tribble(
-  ~matricula  ,  ~prova_01,
-  "20101415"  , 42,
-  "201611179" , 52,
-  "201111593" , 44,
-  "201210054" , NA,
-  "201411224" , 24,
-  "2017204574", 100,
-  "2017204500", 100,
-  "20101448"  , 40,
-  "201611170" , 31
+  ~matricula  ,  ~prova_01, ~atv_01, ~atv_02, ~atv_03,
+  "20101415"  ,  42, 58,  54, 45,
+  "201611179" ,  52, 87, 100, 47,
+  "201111593" ,  44, 58,  54, 45,
+  "201210054" ,  NA, NA,  NA, NA,
+  "201411224" ,  24, 87, 100, 47,
+  "2017204574", 100, 95,  94, 80,
+  "2017204500", 100, 95,  94, 80,
+  "20101448"  ,  40, 58,  54, 45,
+  "201611170" ,  31, 87, 100, 47
 )
 
 nota_parcial %>% 
@@ -55,7 +56,93 @@ nota_parcial %>%
 
 ```
 
-## Gráficos
+## Analises Estatísticas
+Como um aluno não participou, por motivos escusos, de nenhuma das atividades avaliativas, será excuído da análise.
 
-Em breve!
+### Provas
 
+Como fizemos apenas a _Prova 01_, essa será uma análise prévia.
+
+Inicialmente, podemos sumarizar algumas estatísticas básicas como: média, mediana e desvio padrão das notas da _Prova 01_.
+
+```{r}
+sumario <- nota_parcial %>% 
+  select(prova_01) %>% 
+  drop_na() %>% 
+  summarise(
+    media = mean(prova_01),
+    mediana = median(prova_01),
+    desvio_padrao = sd(prova_01),
+    cv = (desvio_padrao/media) * 100
+  )
+
+knitr::kable(sumario)
+```
+
+O _Coeficiente de Variação_ (cv) será, possivelmente, usado quando compararmos a _Prova 01_ com a _Prova 02_.
+Por esse motivo, vamos deixá-lo de lado um pouco.
+
+Apenas observando as estatpisticas numéricas, é notório que há uma assimetria nas distribuição das notas, visto que a _média_ é maior do que a _mediana_.
+Provavelmente, poucas pessoas tiraram notas altas e a maioria ficou com nota perto de 40 pontos.
+O desvio padrão também nos indica essa discrepância.
+
+Mas, para melhor visualizarmos essa distribuição, podemos verificar o gráfico de densidade (uma "suavização" do histograma):
+
+```{r}
+nota_parcial %>% 
+  select(prova_01) %>% 
+  drop_na() %>% 
+  ggplot(aes(prova_01)) +
+  geom_density(fill = "#5D8AA8" ) +
+  geom_vline(xintercept = 43, color = "red") +
+  geom_vline(xintercept = 54.125, color = "red", lty = 2) +
+  labs(
+    title = "Gráfico de Densidade para as notas",
+    subtitle = "(Prova 01)",
+    x = "Notas",
+    y = ""
+  )
+```
+
+As retas vermelhas são a mediana e a média (tracejada).
+Percebemos que as poucas notas altas influenciaram a média da turma positivamente.
+Mas, como a mediana não é influenciada pelos extremos, representa melhor os dados para esse caso.
+
+Para uma melhor visualização desses dados, vamos considerar o boxplot.
+Esse gráfico também é chamado de "caixa e bigode", pois possui o "corpo do gráfico" no formado de uma "caixa" (retângulo) e possui delimitações fora dessa caixa por linhas (os bigodes).
+
+Tal gráfico expressa o primeiro, segundo e terceiro quartil da distribuição (lembrem-se que o segundo quartil representa a mediana).
+Eles estão representados, respectivamente, pela primeira, segunda e terceira faixa horizontal da "caixa".
+Vejamos:
+
+```{r}
+graph_notas <- nota_parcial %>%
+  select(prova_01) %>% 
+  drop_na() %>% 
+  ggplot(aes('', prova_01)) +
+  geom_boxplot(width = 0.5, fill = "#5D8AA8") + 
+  geom_jitter(color = "red") +
+  geom_hline(
+    yintercept = 60, 
+    lty = 2, 
+    color = "orange"
+  ) +
+  geom_text(
+    aes(x = 0.58, y = 62, label = "Média de Aprovação"),
+    colour = "red"
+  ) +
+  labs(
+    title = "Boxplot da distribuição das notas",
+    subtitle = "(Prova 01)",
+    x = "Prova 01", y = "Nota"
+  ) +
+  theme_get() 
+
+ggplotly(graph_notas)
+```
+
+Os pontos em vermelho representam as notas espalhadas aleatoriamente sobre o gráfico, mas que mantém seu valor numérico.
+Assim, podemos ver que duas notas atingiram 100 pontos e a maioria encontram-se perto da mediana.
+
+Também está destacada a _Média de Aprovação_, a saber, 60 pontos.
+Coloquei apenas para referência, visto que, matematicamente, a média da turma será ponderada. Logo, tirar uma nota abaixo de 60 pontos nessa prova não significa que tudo está perdido, mas é um alerta para que haja uma melhora significativa na próxima.
