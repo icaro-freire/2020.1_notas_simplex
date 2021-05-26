@@ -56,7 +56,7 @@ nota_parcial %>%
 
 ```
 
-## Analises Estatísticas
+## Análises Estatísticas
 Como um aluno não participou, por motivos escusos, de nenhuma das atividades avaliativas, será excuído da análise.
 
 ### Provas
