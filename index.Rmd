@@ -35,19 +35,59 @@ Qualquer discrepância deve ser comunicada imediatamente, visto que tais notas s
 
 
 ```{r}
+# Tabela Base
 nota_parcial <- tribble(
-  ~matricula  ,  ~prova_01, ~atv_01, ~atv_02, ~atv_03,
-  "20101415"  ,  42, 58,  54, 45,
-  "201611179" ,  52, 87, 100, 47,
-  "201111593" ,  44, 58,  54, 45,
-  "201210054" ,  NA, NA,  NA, NA,
-  "201411224" ,  24, 87, 100, 47,
-  "2017204574", 100, 95,  94, 80,
-  "2017204500", 100, 95,  94, 80,
-  "20101448"  ,  40, 58,  54, 45,
-  "201611170" ,  31, 87, 100, 47
+  ~matricula  ,  ~prova_01, ~atv_01, ~atv_02, ~atv_03, ~atv_04, ~prova_02,
+  "20101415"  ,  42, 58,  54, 45, 50, 35,
+  "201611179" ,  52, 87, 100, 47, 65, 90,
+  "201111593" ,  44, 58,  54, 45, 50, 53,
+  "201210054" ,  NA, NA,  NA, NA, NA, NA,
+  "201411224" ,  24, 87, 100, 47, 65, 78,
+  "2017204574", 100, 95,  94, 80, 88, 98,
+  "2017204500", 100, 95,  94, 80, 88, 97,
+  "20101448"  ,  40, 58,  54, 45, 50, NA,
+  "201611170" ,  31, 87, 100, 47, 65, 90
 )
 
+# Função para arredondar notas das Lições
+notas_licao <- function(n){
+  round(n/23, 1)            # pega `n` divide por 23 e arredonda para 1 casa decimal
+}
+
+# vetor para as notas das Lições
+licoes_nota <- notas_licao(
+  c(1970, 2050, 1845, 680, 2000, 2275, 2280, 1920, 2150)
+)
+
+# Adicionando as notas das Lições
+nota_parcial <- nota_parcial %>% 
+  mutate(licoes = licoes_nota)
+
+# Vetor para Ponto Extra
+ponto_extra <- c(1, 1, 1, NA, 1, 1, 1, 1, 1)
+
+
+# Adicionando as médias das provas, atividades, parcial
+nota_parcial <- nota_parcial %>% 
+   mutate(
+     media_prova = (prova_01 + prova_02)/2,
+     media_atv = (atv_01 + atv_02 + atv_03 + atv_04)/4,
+     parcial = round((3 * licoes + 3 * media_atv + 4 * media_prova)/100, 1)
+   )
+
+# Adicionando ponto extra
+nota_parcial <- nota_parcial %>% 
+  mutate(
+    extra = ponto_extra
+  )
+
+# Adicionando nota final
+nota_parcial <- nota_parcial %>% 
+  mutate(
+    nota = if_else((parcial + extra) < 10, parcial + extra, 10)
+  ) 
+
+# TABELA FINAL ----------------------------------------------------------------
 nota_parcial %>% 
   datatable(
     caption = 'Resultado Parcial', 
